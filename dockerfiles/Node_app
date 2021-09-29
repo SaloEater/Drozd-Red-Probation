@@ -1,0 +1,11 @@
+FROM node:latest
+
+# создание директории приложения
+WORKDIR /usr/src
+
+# установка зависимостей
+# символ астериск ("*") используется для того чтобы по возможности 
+# скопировать оба файла: package.json и package-lock.json
+COPY package*.json .
+
+RUN npm i -g @nestjs/cli

@@ -1,0 +1,32 @@
+version: '3.0'
+
+services:
+    node_backend:
+        build:
+            context: .
+            dockerfile: ./dockerfiles/Node_app
+        ports: 
+            - 49160:8080
+        container_name: node_backend
+        volumes:
+            - ./app:/usr/src
+        working_dir: /usr/src
+        expose:
+            - 8080
+        entrypoint: ["ping", "0.0.0.0", "-t", "120"]
+        depends_on:
+          - mongodb
+          
+    mongodb:
+        image: mongo:latest
+        container_name: mongodb
+        volumes:
+            - mongodb-data:/data/db
+        ports:
+            - 27017:27017
+        expose:
+          - 27017
+        entrypoint: ["mongod"]
+
+volumes:
+    mongodb-data:
